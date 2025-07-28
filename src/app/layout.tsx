@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider } from '@/contexts/AuthContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
 import Layout from '@/components/Layout/Layout';
 import './globals.css';
 
@@ -23,11 +24,13 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <Layout>
-              {children}
-            </Layout>
-          </AuthProvider>
+          <ThemeProvider>
+            <AuthProvider>
+              <Layout>
+                {children}
+              </Layout>
+            </AuthProvider>
+          </ThemeProvider>
         </QueryClientProvider>
       </body>
     </html>

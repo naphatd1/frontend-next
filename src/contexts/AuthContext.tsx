@@ -94,9 +94,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       console.log('Attempting secure login');
       
-      // Use secure API with validation
-      const response = await authAPI.login({ email, password });
-      const authData: AuthResponse = response.data;
+      // Use fetch API for login
+      const authData: AuthResponse = await authFetchAPI.login({ email, password });
 
       console.log('Login successful');
 
@@ -159,8 +158,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     try {
-      const response = await authAPI.register({ email, password, name });
-      const authData: AuthResponse = response.data;
+      console.log('Attempting registration with:', { email, name });
+      
+      // Use fetch API for registration
+      const authData: AuthResponse = await authFetchAPI.register({ email, password, name });
+
+      console.log('Registration successful');
 
       // Save tokens and user data with secure flags
       Cookies.set('access_token', authData.access_token, {
@@ -187,13 +190,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       
       router.push('/dashboard');
     } catch (error: any) {
+      console.error('Registration error:', error.message);
+      
       let message = 'Registration failed';
-      if (error.response?.status === 409) {
+      if (error.message.includes('409') || error.message.includes('already exists')) {
         message = 'Email already exists';
-      } else if (error.response?.status === 429) {
+      } else if (error.message.includes('429')) {
         message = 'Too many requests. Please try again later.';
-      } else if (error.response?.data?.message) {
-        message = error.response.data.message;
+      } else if (error.message.includes('400')) {
+        message = 'Invalid registration data';
       } else if (error.message && !error.message.includes('Rate limit')) {
         message = error.message;
       }

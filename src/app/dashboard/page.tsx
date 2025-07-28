@@ -48,21 +48,21 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-white overflow-hidden shadow rounded-lg">
+      <div className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg transition-colors duration-200">
         <div className="px-4 py-5 sm:p-6">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <User className="h-8 w-8 text-gray-400" />
+              <User className="h-8 w-8 text-gray-400 dark:text-gray-500" />
             </div>
             <div className="ml-5 w-0 flex-1">
               <dl>
-                <dt className="text-sm font-medium text-gray-500 truncate">
+                <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate transition-colors duration-200">
                   Welcome back
                 </dt>
-                <dd className="text-lg font-medium text-gray-900">
+                <dd className="text-lg font-medium text-gray-900 dark:text-white transition-colors duration-200">
                   {user?.name || user?.email}
                 </dd>
-                <dd className="text-sm text-gray-500">
+                <dd className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
                   Role: {user?.role} • Joined: {new Date(user?.createdAt || '').toLocaleDateString()}
                 </dd>
               </dl>
@@ -74,7 +74,7 @@ const DashboardPage: React.FC = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat) => (
-          <div key={stat.name} className="bg-white overflow-hidden shadow rounded-lg">
+          <div key={stat.name} className="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg transition-colors duration-200">
             <div className="p-5">
               <div className="flex items-center">
                 <div className="flex-shrink-0">
@@ -84,10 +84,10 @@ const DashboardPage: React.FC = () => {
                 </div>
                 <div className="ml-5 w-0 flex-1">
                   <dl>
-                    <dt className="text-sm font-medium text-gray-500 truncate">
+                    <dt className="text-sm font-medium text-gray-500 dark:text-gray-400 truncate transition-colors duration-200">
                       {stat.name}
                     </dt>
-                    <dd className="text-lg font-medium text-gray-900">
+                    <dd className="text-lg font-medium text-gray-900 dark:text-white transition-colors duration-200">
                       {stat.value}
                     </dd>
                   </dl>
@@ -99,30 +99,30 @@ const DashboardPage: React.FC = () => {
       </div>
 
       {/* Recent Posts */}
-      <div className="bg-white shadow rounded-lg">
+      <div className="bg-white dark:bg-gray-800 shadow rounded-lg transition-colors duration-200">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
+          <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-white transition-colors duration-200">
             Recent Posts
           </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+          <p className="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
             Your latest posts and activities
           </p>
         </div>
-        <div className="border-t border-gray-200">
+        <div className="border-t border-gray-200 dark:border-gray-700">
           {posts?.data?.length > 0 ? (
-            <ul className="divide-y divide-gray-200">
+            <ul className="divide-y divide-gray-200 dark:divide-gray-700">
               {posts.data.slice(0, 5).map((post: any) => (
                 <li key={post.id} className="px-4 py-4 sm:px-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <FileText className="h-5 w-5 text-gray-400" />
+                        <FileText className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">
                           {post.title}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
                           {post.published ? 'Published' : 'Draft'} • {new Date(post.createdAt).toLocaleDateString()}
                         </div>
                       </div>
@@ -130,9 +130,9 @@ const DashboardPage: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         post.published 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400' 
+                          : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
+                      } transition-colors duration-200`}>
                         {post.published ? 'Published' : 'Draft'}
                       </span>
                     </div>
@@ -142,9 +142,9 @@ const DashboardPage: React.FC = () => {
             </ul>
           ) : (
             <div className="px-4 py-12 text-center">
-              <FileText className="mx-auto h-12 w-12 text-gray-400" />
-              <h3 className="mt-2 text-sm font-medium text-gray-900">No posts</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <FileText className="mx-auto h-12 w-12 text-gray-400 dark:text-gray-500" />
+              <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white transition-colors duration-200">No posts</h3>
+              <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 transition-colors duration-200">
                 Get started by creating your first post.
               </p>
             </div>

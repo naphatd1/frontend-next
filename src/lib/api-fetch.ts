@@ -47,6 +47,9 @@ export const authFetchAPI = {
   login: (data: { email: string; password: string }) =>
     fetchAPI.post('/auth/login', data),
   
+  register: (data: { email: string; password: string; name?: string }) =>
+    fetchAPI.post('/auth/register', data),
+  
   getProfile: (token: string) =>
     fetchAPI.get('/auth/profile', token),
 };
