@@ -1,0 +1,52 @@
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+
+// Simple fetch-based API client
+export const fetchAPI = {
+  async post(endpoint: string, data: any) {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP ${response.status}`);
+    }
+
+    return response.json();
+  },
+
+  async get(endpoint: string, token?: string) {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      method: 'GET',
+      headers,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.message || `HTTP ${response.status}`);
+    }
+
+    return response.json();
+  }
+};
+
+// Auth API using fetch
+export const authFetchAPI = {
+  login: (data: { email: string; password: string }) =>
+    fetchAPI.post('/auth/login', data),
+  
+  getProfile: (token: string) =>
+    fetchAPI.get('/auth/profile', token),
+};
